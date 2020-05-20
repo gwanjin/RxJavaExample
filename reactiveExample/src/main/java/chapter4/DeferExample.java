@@ -17,6 +17,11 @@ public class DeferExample {
 	
 	Iterator<String> colorList = Arrays.asList(Shape.RED, Shape.GREEN, Shape.BLUE, Shape.PUPPLE).iterator();
 	
+	public static void main(String[] args) {
+		DeferExample defer = new DeferExample();
+		defer.marbleDiagram2();
+	}
+	
 	public void marbleDiagram() {
 		colors = new ArrayList<>();
 		colors.add("RED");
@@ -44,8 +49,8 @@ public class DeferExample {
 	}
 	
 	public void marbleDiagram2() {
-		Callable<Observable<String>> supplier = () -> getObservable();		
-		Observable<String> source = Observable.defer(supplier);
+		Callable<Observable<String>> supplier = () -> getObservable();
+		Observable<String> source = Observable.defer(supplier).doOnNext(v->System.out.println("onNext")).doOnComplete(()->System.out.println("doOnComplete()"));
 		
 		source.subscribe(val -> Log.i("Subscriber #1:" + val));
 		source.subscribe(val -> Log.i("Subscriber #2:" + val));
