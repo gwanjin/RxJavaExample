@@ -1,4 +1,6 @@
-package chapter4;
+package common;
+
+import chapter4.ShapeCannotFlipException;
 
 public class Shape {
 	public static final String HEXAGON = "HEXAGON";

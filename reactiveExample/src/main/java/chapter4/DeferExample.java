@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 
 import common.CommonUtils;
 import common.Log;
+import common.Shape;
 import io.reactivex.Observable;
 
 public class DeferExample {
