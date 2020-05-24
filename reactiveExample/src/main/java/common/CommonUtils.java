@@ -6,6 +6,7 @@ import java.util.Random;
 
 public class CommonUtils {			
 	public static final String ERROR_CODE = "-500";
+	public static final String GITHUB_ROOT = "https://raw.githubusercontent.com/yudong80/reactivejava/master/";
 	
 	public static long startTime;
 
