@@ -2,6 +2,8 @@ package chapter7;
 
 import common.Log;
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 
 public class ExceptionHandling {
 	public static void main(String[] args) {
@@ -9,7 +11,8 @@ public class ExceptionHandling {
 //		handling.cannotCatch();
 //		handling.onErrorReturn();
 //		handling.onError();
-		handling.onErrorItem();
+//		handling.onErrorItem();
+		handling.onErrorResumeNext();
 	}
 	
 	public void cannotCatch() {
@@ -66,5 +69,25 @@ public class ExceptionHandling {
 							Log.i("result : " + result);
 						}
 					});
+	}
+	
+	public void onErrorResumeNext() {
+		String[] salesData = {"100", "200", "A300"};
+		Observable<Integer> parseError = Observable.defer(() -> {
+			Log.d("send mail");
+			return Observable.just(-1, 1000);
+		}).subscribeOn(Schedulers.io());
+		
+		Observable<Integer> source = Observable.fromArray(salesData)
+							.map(Integer::parseInt)
+							.onErrorResumeNext(parseError);
+		
+		source.subscribe(data -> {
+			if(data<0) {
+				Log.e("Wrong Data found");
+				return;
+			}
+			Log.i("Sales data : " + data);
+		});
 	}
 }
